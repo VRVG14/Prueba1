@@ -3,12 +3,13 @@ class Consultas():
     """
     docstring
     """
-    def querySimpl(query):
+    con = Connector.Connector()
+
+    def querySimok(self, query):
         """
         Metodo para hacer una consulta general sobre algo
         """
-        con = Connector.Connector()
-        result = con.apuntador.execute(query)         
+        
+        self.con.apuntador.execute(query)
+        result = self.con.apuntador.fetchall()
         return result
-    
-    

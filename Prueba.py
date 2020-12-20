@@ -9,20 +9,33 @@ def actualizarTabla(lista):
     Metodo para actualizar la tabla
     Recibe como parametro una Lista de objetos
     """
+    table.delete(*table.get_children())
+    id = 1
     for i in lista:
         table.insert('', 'end',values=i)
+        table.column(id, anchor=tk.N)
+        id += 1
 
 def query(query):
     """
     Funcion para hacer una consulta
     tiene como parametro una variable string para hacer las consultas
     """
-    print("HOAL")
     inter = Intermediario.Consultas()
-    return inter.querySimpl(query)
+    result = inter.querySimok(query)
+    return result
+
+def buscar():
+    """
+    Comando usador por el btn buscar, para poder el producto escrito por el usuario
+    """
+    palabra = txtBuscar.get()
+    consulta = "SELECT * FROM Producto WHERE nombreProducto LIKE %" + palabra + "%"
+    actualizarTabla(query(consulta))
 
 if __name__ == "__main__":
     window = Tk()
+    txtBuscar = StringVar()
     window.title("Ventana Prueba")
     window.geometry('1200x720')
 
@@ -30,7 +43,7 @@ if __name__ == "__main__":
     wrapper2 = LabelFrame(window, text="Añadir Productos")
     wrapper3 = LabelFrame(window, text="Hacer consulta")
 
-    wrapper1.pack(fill="both", expand="yes", padx=20, pady=5)
+    wrapper1.pack(fill="both", expand="yes", padx=5, pady=5)
     wrapper2.pack(fill="both", expand="yes", padx=20, pady=5)
     wrapper3.pack(fill="both", expand="yes", padx=20, pady=5)
     
@@ -43,13 +56,17 @@ if __name__ == "__main__":
     table.heading(4, text="Precio")
     table.heading(5, text="Existencia")
     table.heading(6, text="Unidad de Medida")
-
-    aux = "SELECT"
-    aux = aux + " * "
-    aux = aux + "FROM Producto"
-    print(aux)
-
-    pito = query(aux)
+    
+    #Buscar
+    label = Label(wrapper2, text='Buscar')
+    label.pack(side=tk.LEFT, padx=10)
+    entry = Entry(wrapper2, textvariable=txtBuscar)
+    entry.pack(side=tk.LEFT, padx=5)
+    btn = Button(wrapper2, text='Buscar', command=buscar)
+    btn.pack(side=tk.LEFT, padx=6)
+    
+    
+    pito = query("SELECT * FROM Producto;")
     actualizarTabla(pito)
 
     window.mainloop()

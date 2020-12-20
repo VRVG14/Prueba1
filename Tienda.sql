@@ -1,12 +1,13 @@
 create database Tienda;
-
+drop database Tienda;
 use Tienda;
-
+alter table Producto modify precio decimal(4,2);
+drop table Producto;
 create table Producto (
 	idProducto int primary key check(idProducto > 0),
     nombreProducto varchar(50) not null check(nombreProducto regexp '^[a-zA-Z0-9\\s]+$'),
     nombreProveedor varchar(50) not null check(nombreProveedor regexp '^[a-zA-Z0-9\\s]+$'),
-    precio decimal(3,2) not null check(precio > 0),
+    precio decimal(5,2) not null check(precio > 0.0),
     cantidad int not null check(cantidad > -1),
     unidadDeMedida varchar(30) not null check(unidadDeMedida regexp '^[a-zA-Z\\s]+$')
 );
@@ -36,3 +37,9 @@ create table compraDetallada (
     foreign key(idCompra) references compra(idCompra),
     foreign key(idProducto) references Producto(idProducto)
 );
+
+
+use Tienda;
+select * from Producto;
+delete from Producto where idProducto = 1;
+insert into Producto values(5,"Churrumaiz", "Sabritas", 9, 20, "Empaquetado");
