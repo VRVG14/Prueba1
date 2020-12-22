@@ -40,6 +40,6 @@ create table compraDetallada (
 
 
 use Tienda;
-select * from Producto;
+select * from Producto where nombreProducto like '%Doritos%';
 delete from Producto where idProducto = 1;
-insert into Producto values(5,"Churrumaiz", "Sabritas", 9, 20, "Empaquetado");
+insert into Producto values(6,"Arroz", "Fernando", 24, 20, "kilogramos");

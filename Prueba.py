@@ -30,7 +30,7 @@ def buscar():
     Comando usador por el btn buscar, para poder el producto escrito por el usuario
     """
     palabra = txtBuscar.get()
-    consulta = "SELECT * FROM Producto WHERE nombreProducto LIKE %" + palabra + "%"
+    consulta = "SELECT * FROM Producto WHERE nombreProducto LIKE '%" + palabra + "%'"
     actualizarTabla(query(consulta))
 
 if __name__ == "__main__":
