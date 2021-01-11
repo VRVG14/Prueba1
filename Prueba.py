@@ -30,7 +30,19 @@ def buscar():
     Comando usador por el btn buscar, para poder el producto escrito por el usuario
     """
     palabra = txtBuscar.get()
-    consulta = "SELECT * FROM Producto WHERE nombreProducto LIKE '%" + palabra + "%'"
+    if comboEleccion.current() == -1:
+        consulta = "SELECT * FROM Producto WHERE nombreProducto LIKE '%" + palabra + "%'"
+    elif comboEleccion.current() == 0:
+        consulta = "SELECT * FROM Producto WHERE ID LIKE '%" + palabra + "%'"
+    elif comboEleccion.current() == 1:
+        consulta = "SELECT * FROM Producto WHERE nombreProducto LIKE '%" + palabra + "%'"
+    elif comboEleccion.current() == 2:
+        consulta = "SELECT * FROM Producto WHERE Proveedor LIKE '%" + palabra + "%'"
+    elif comboEleccion.current() == 3:
+        consulta = "SELECT * FROM Producto WHERE precio LIKE '%" + palabra + "%'"
+    elif comboEleccion.current() == 4:
+        consulta = "SELECT * FROM Producto WHERE existencia LIKE '%" + palabra + "%'"
+    
     actualizarTabla(query(consulta))
 
 if __name__ == "__main__":
@@ -44,8 +56,8 @@ if __name__ == "__main__":
     wrapper3 = LabelFrame(window, text="Hacer consulta")
 
     wrapper1.pack(fill="both", expand="yes", padx=5, pady=5)
-    wrapper2.pack(fill="both", expand="yes", padx=20, pady=5)
-    wrapper3.pack(fill="both", expand="yes", padx=20, pady=5)
+    wrapper2.pack(fill="both", expand="yes", padx=5, pady=5)
+    wrapper3.pack(fill="both", expand="yes", padx=5, pady=5)
     
     table = ttk.Treeview(wrapper1, columns=(1,2,3,4,5,6), show="headings", height="6")
     table.pack()
@@ -59,11 +71,14 @@ if __name__ == "__main__":
     
     #Buscar
     label = Label(wrapper2, text='Buscar')
-    label.pack(side=tk.LEFT, padx=10)
+    label.place(x=3,y=3)
     entry = Entry(wrapper2, textvariable=txtBuscar)
-    entry.pack(side=tk.LEFT, padx=5)
+    entry.place(x=3,y=23)
     btn = Button(wrapper2, text='Buscar', command=buscar)
-    btn.pack(side=tk.LEFT, padx=6)
+    btn.place(x=173,y=20)
+    comboEleccion = ttk.Combobox(wrapper2, state="readonly", values=["ID","Nombre","Proveedor","Precio","Existencia"])
+    comboEleccion.place(x=3,y=50, width=239)
+
     
     
     pito = query("SELECT * FROM Producto;")
